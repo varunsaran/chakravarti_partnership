@@ -1,0 +1,49 @@
+{% extends "blog/base.html" %}
+{% load custom_tags}
+{% block content %}
+
+<div class="content-section">
+
+  <p class="text-secondary">{{ user.profile.sheets_id }}</p>
+    <p class="text-secondary">Your Net Equity Deposit: {{ partner_starting_amount|get_item:user.profile.sheets_id }}</p>
+    <p class="text-secondary">Your Equity: {{ ticker_amounts|get_item:user.profile.sheets_id }}</p>
+    <p class="text-secondary">Total Equity: ${{ ticker_amounts|get_item:"Total" }}</p>
+
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.css" rel=”stylesheet” type=”text/css”>
+    <link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.4.0.min.css" rel=”stylesheet” type=”text/css”>
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.js"></script>
+    <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.4.0.min.js"></script>
+    {{ script | safe }}
+    {{ div | safe}}
+
+    <head>
+      <meta charset="utf-8">
+      <title>matplot</title>
+    </head>
+    <body>
+      <img src="data:image/png;base64,{{ data }}" alt="" height="300" ,width="300">
+    </body>
+</div>
+
+        <!--
+    {% for post in posts %}
+    <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="#">{{ post.author }}</a>
+                <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+              </div>
+              <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+              <p class="article-content">{{ post.content }}</p>
+            </div>
+          </article>
+    {% endfor %}
+
+    -->
+{% endblock content %}
+
+
+
+<!-- <h1> {{ post.title }}</h1>
+        <p> by {{ post.author }} </p>
+        <p> {{ post.content }}</p> -->
