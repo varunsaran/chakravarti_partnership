@@ -47,10 +47,10 @@ def home(request):
     years = list(map(int, years))
     performance = sheet.col_values(2)
     performance = performance[1:len(performance)-1]
-    #performance = [float(value[:-1]) for value in performance]
+    performance = [float(value[:-1]) for value in performance]
     sp500 = sheet.col_values(3)
     sp500 = sp500[1:len(sp500)-1]
-    #sp500 = [float(value[:-1]) for value in sp500]
+    sp500 = [float(value[:-1]) for value in sp500]
 
 
     plot = figure(title= 'Partnership vs S&P500' , 
@@ -58,9 +58,6 @@ def home(request):
         y_axis_label= 'Performance (%)', 
         plot_width =400,
         plot_height =400)
-    years = [1,2,3]
-    performance = [10,20,30]
-    sp500 = [20,30,40]
 
     plot.line(years, performance, legend_label= 'partnership', line_width = 2, color='green')
     plot.circle(years, performance, color='green')
