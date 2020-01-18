@@ -13,16 +13,8 @@ import pprint
 from oauth2client.service_account import ServiceAccountCredentials
 import os.path
 import json
+from .google_spreadsheet import spreadsheet
 # Create your views here.
-
-'''DIRNAME = os.path.dirname(__file__)
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(DIRNAME, 'client_secret.json'),
-    scope)
-client = gspread.authorize(creds)
-spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1lAUs0nYvjUJFR3_nMzxUWBbvkIfTaMgR1LhROCX_cTk/edit#gid=0')
-sheet = spreadsheet.worksheet("test")
-result = sheet.cell(1,1).value'''
 
 @login_required
 def home(request):
@@ -31,8 +23,8 @@ def home(request):
     data = json.loads(open(os.path.join(BASE, "client_secret.json")).read())
     creds = ServiceAccountCredentials.from_json_keyfile_dict(data, scope)
     client = gspread.authorize(creds)
-
     spreadsheet = client.open_by_url('https://docs.google.com/spreadsheets/d/1-TxF0p273SPv7XI67SUJCw-oaCxHnYk1CUTRaYJj5Nc/edit#gid=0&fvid=1259069163')
+
     sheet = spreadsheet.worksheet("Shareholder Equity")
     partners = sheet.col_values(1)
     amounts = sheet.col_values(3)
@@ -49,17 +41,16 @@ def home(request):
 
 
     #graph partnership change every year + dif in partnership vs S&P500
-
     sheet = spreadsheet.worksheet("Yearly Performance")
     years = sheet.col_values(1)
     years = years[1:len(years)-1]
     years = list(map(int, years))
     performance = sheet.col_values(2)
     performance = performance[1:len(performance)-1]
-    performance = [float(value[:-1]) for value in performance]
+    #performance = [float(value[:-1]) for value in performance]
     sp500 = sheet.col_values(3)
     sp500 = sp500[1:len(sp500)-1]
-    sp500 = [float(value[:-1]) for value in sp500]
+    #sp500 = [float(value[:-1]) for value in sp500]
 
 
     plot = figure(title= 'Partnership vs S&P500' , 
@@ -67,6 +58,9 @@ def home(request):
         y_axis_label= 'Performance (%)', 
         plot_width =400,
         plot_height =400)
+    years = [1,2,3]
+    performance = [10,20,30]
+    sp500 = [20,30,40]
 
     plot.line(years, performance, legend_label= 'partnership', line_width = 2, color='green')
     plot.circle(years, performance, color='green')
@@ -80,5 +74,6 @@ def home(request):
     return render(request, 'blog/home.html', context)
 
 def about(request):
+    
     return render(request, 'blog/about.html', {'title': 'About'} )
 
