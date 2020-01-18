@@ -39,25 +39,37 @@ def home(request):
         partner_starting_amount[elem[0]] = elem[1]
 
 
+    try:
 
-    #graph partnership change every year + dif in partnership vs S&P500
-    sheet = spreadsheet.worksheet("Yearly Performance")
-    years = sheet.col_values(1)
-    years = years[1:len(years)-1]
-    years = list(map(int, years))
-    performance = sheet.col_values(2)
-    performance = performance[1:len(performance)-1]
-    performance = [float(value[:-1]) for value in performance]
-    sp500 = sheet.col_values(3)
-    sp500 = sp500[1:len(sp500)-1]
-    sp500 = [float(value[:-1]) for value in sp500]
+        #graph partnership change every year + dif in partnership vs S&P500
+        sheet = spreadsheet.worksheet("Yearly Performance")
+        years = sheet.col_values(1)
+        years = years[1:len(years)-1]
+        years = list(map(int, years))
+        performance = sheet.col_values(2)
+        performance = performance[1:len(performance)-1]
+        performance = [float(value[:-1]) for value in performance]
+        sp500 = sheet.col_values(3)
+        sp500 = sp500[1:len(sp500)-1]
+        sp500 = [float(value[:-1]) for value in sp500]
 
 
-    plot = figure(title= 'Partnership vs S&P500' , 
-        x_axis_label= 'Year', 
-        y_axis_label= 'Performance (%)', 
-        plot_width =400,
-        plot_height =400)
+        plot = figure(title= 'Partnership vs S&P500' , 
+            x_axis_label= 'Year', 
+            y_axis_label= 'Performance (%)', 
+            plot_width =400,
+            plot_height =400)
+    except:
+        years = [2017,2018,2019]
+        performance = [10,10,10]
+        sp500 = [10,10,10]
+
+        plot = figure(title= '**TEST graph** check Google Sheet for issues' , 
+            x_axis_label= 'Year', 
+            y_axis_label= 'Performance (%)', 
+            plot_width =400,
+            plot_height =400)
+
 
     plot.line(years, performance, legend_label= 'partnership', line_width = 2, color='green')
     plot.circle(years, performance, color='green')
