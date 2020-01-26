@@ -11,6 +11,7 @@ class UserData(models.Model):
     estimated_annual_income = models.IntegerField()
     percentage_ownership = models.FloatField(default = 0.0)
     daily_gain = models.FloatField(default = 0.0)
+    
 
     def __str__(self):
         return f'Data for {self.sheets_id}' 

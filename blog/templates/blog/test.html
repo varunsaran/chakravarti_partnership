@@ -13,7 +13,7 @@
     {% if user_data.daily_gain >= 0 %}
       <p class="text-secondary">Today's change: ${{ user_data.daily_gain | intcomma|floatformat:2}}</p>
     {% else %}
-      <p class="text-secondary">Today's change: -${{ user_data.daily_gain |multiply:-1 |intcomma|floatformat:2 }}</p>
+      <p class="text-secondary">Today's change: -${{ user_data.daily_gain |multiply:-1 |floatformat:2|intcomma }}</p>
     {% endif %}
 
 
