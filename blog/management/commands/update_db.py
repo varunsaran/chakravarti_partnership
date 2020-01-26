@@ -80,9 +80,6 @@ class Command(BaseCommand):
             try:
                 partner_obj.daily_gain = partnership_days_gain * partner_obj.percentage_ownership
                 partner_obj.save()
-                msg = str(partner_obj.daily_gain)
-                self.stdout.write(msg)
-
             except Exception as e:
                 error_msg = f'{e} occured with partner {elem[0]} '
                 self.stdout.write(error_msg)

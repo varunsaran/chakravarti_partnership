@@ -10,8 +10,11 @@
     <p class="text-secondary">Current Equity: ${{ user_data.current_equity | intcomma}}</p>
     <p class="text-secondary">Net Equity Deposit: ${{ user_data.net_equity_deposit| intcomma }}</p>
     <p class="text-secondary">Estimated Annual Income: ${{ user_data.estimated_annual_income | intcomma}}</p>
-    <p class="text-secondary">Today's change: ${{ user_data.daily_gain | intcomma|floatformat:2}}</p>
-
+    {% if user_data.daily_gain >= 0 %}
+      <p class="text-secondary">Today's change: ${{ user_data.daily_gain | intcomma|floatformat:2}}</p>
+    {% else %}
+      <p class="text-secondary">Today's change: -${{ user_data.daily_gain |multiply:-1 |intcomma|floatformat:2 }}</p>
+    {% endif %}
 
 
 
