@@ -1,15 +1,16 @@
 {% extends "blog/base.html" %}
 {% load custom_tags}
+{% load humanize %}
 {% block content %}
 
 
 
 <div class="content-section">
     <p class="text-secondary">Welcome, {{ user.username }}</p>
-    <p class="text-secondary">Current Equity: ${{ user_data.current_equity }}</p>
-    <p class="text-secondary">Net Equity Deposit: ${{ user_data.net_equity_deposit }}</p>
-    <p class="text-secondary">Estimated Annual Income: ${{ user_data.estimated_annual_income }}</p>
-    <p class="text-secondary">Today's change: ${{ user_data.daily_gain }}</p>
+    <p class="text-secondary">Current Equity: ${{ user_data.current_equity | intcomma}}</p>
+    <p class="text-secondary">Net Equity Deposit: ${{ user_data.net_equity_deposit| intcomma }}</p>
+    <p class="text-secondary">Estimated Annual Income: ${{ user_data.estimated_annual_income | intcomma}}</p>
+    <p class="text-secondary">Today's change: ${{ user_data.daily_gain | intcomma|floatformat:2}}</p>
 
 
 
