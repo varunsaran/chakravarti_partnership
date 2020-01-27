@@ -2,6 +2,7 @@
 
 #contains Google API key
 users/client_secret.json
+blog/clinet_secret.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
