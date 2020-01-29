@@ -11,9 +11,9 @@
     <p class="text-secondary">Net Equity Deposit: ${{ user_data.net_equity_deposit| intcomma }}</p>
     <p class="text-secondary">Estimated Annual Income: ${{ user_data.estimated_annual_income | intcomma}}</p>
     {% if user_data.daily_gain >= 0 %}
-      <p class="text-secondary">Today's change: ${{ user_data.daily_gain | floatformat:2 | intcomma}}</p>
+      <p class="text-secondary">Today's change: <font color = 'green'> +${{ user_data.daily_gain | floatformat:2 | intcomma}} </font></p>
     {% else %}
-      <p class="text-secondary">Today's change: -${{ user_data.daily_gain |multiply:-1 |floatformat:2|intcomma }}</p>
+      <p class="text-secondary">Today's change: <font color = 'red'> -${{ user_data.daily_gain |multiply:-1 |floatformat:2|intcomma }} </font></p>
     {% endif %}
 
 
