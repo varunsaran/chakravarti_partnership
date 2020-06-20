@@ -71,7 +71,7 @@ class Command(BaseCommand):
             except Exception as e:
                 error_msg = f'{e} occured with partner {elem[0]} '
                 self.stdout.write(error_msg)
-        
+
         metrics_sheet = spreadsheet.worksheet("Metrics")
         partnership_days_gain = metrics_sheet.acell('B9').value
         partnership_days_gain = partnership_days_gain.replace('$', '')
@@ -83,15 +83,3 @@ class Command(BaseCommand):
             except Exception as e:
                 error_msg = f'{e} occured with partner {elem[0]} '
                 self.stdout.write(error_msg)
-
-
-        
-        
-        
-        
-
-
-
-
-
-        

@@ -11,10 +11,10 @@ class UserData(models.Model):
     estimated_annual_income = models.IntegerField()
     percentage_ownership = models.FloatField(default = 0.0)
     daily_gain = models.FloatField(default = 0.0)
-    
+
 
     def __str__(self):
-        return f'Data for {self.sheets_id}' 
+        return f'Data for {self.sheets_id}'
 
 class PartnershipData(models.Model):
     year = models.IntegerField(unique=True)
@@ -24,6 +24,10 @@ class PartnershipData(models.Model):
     def __str__(self):
         return f'Performance data for year {self.year}'
 
-
-
-
+class TransactionHistory(models.Model):
+    sheets_id = models.CharField(max_length=15)
+    transaction_amount = models.FloatField()
+    unit_price = models.FloatField()
+    date = models.DateTimeField()
+    def __str__(self):
+        return f'Transaction on {self.date} by {self.sheets_id} for ${self.transaction_amount}'

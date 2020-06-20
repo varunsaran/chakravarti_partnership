@@ -14,6 +14,7 @@ import json
 from .google_spreadsheet import spreadsheet
 # Create your views here.
 
+#OLD HOME FUNCTION
 @login_required
 def home(request):
     '''scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']    
@@ -107,5 +108,5 @@ def new_home(request):
     plot.circle(years, sp500, color='orange')
     script, div = components(plot)
 
-    context = {'title': 'About', 'user_data': user_data, 'script': script, 'div': div} #pylint: disable=no-member
+    context = {'title': 'Home', 'user_data': user_data, 'script': script, 'div': div} #pylint: disable=no-member
     return render(request, 'blog/test.html', context )
