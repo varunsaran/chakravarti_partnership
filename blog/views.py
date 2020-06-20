@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 from .models import UserData
-from .models import PartnershipData
+from .models import PartnershipData, TransactionHistory
 from django.contrib.auth.decorators import login_required
-from bokeh.plotting import figure, output_file, show 
+from bokeh.plotting import figure, output_file, show
 from bokeh.embed import components
 ##GOOGLE SHEETS API IMPORTS
 import gspread
@@ -17,7 +17,7 @@ from .google_spreadsheet import spreadsheet
 #OLD HOME FUNCTION
 @login_required
 def home(request):
-    '''scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']    
+    '''scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     BASE = os.path.dirname(os.path.abspath(__file__))
     data = json.loads(open(os.path.join(BASE, "client_secret.json")).read())
     creds = ServiceAccountCredentials.from_json_keyfile_dict(data, scope)
@@ -53,9 +53,9 @@ def home(request):
         sp500 = [float(value[:-1]) for value in sp500]
 
 
-        plot = figure(title= 'Partnership vs S&P500' , 
-            x_axis_label= 'Year', 
-            y_axis_label= 'Performance (%)', 
+        plot = figure(title= 'Partnership vs S&P500' ,
+            x_axis_label= 'Year',
+            y_axis_label= 'Performance (%)',
             plot_width =400,
             plot_height =400)
     except:
@@ -63,9 +63,9 @@ def home(request):
         performance = [10,10,10]
         sp500 = [10,10,10]
 
-        plot = figure(title= '**TEST graph** check Google Sheet for issues' , 
-            x_axis_label= 'Year', 
-            y_axis_label= 'Performance (%)', 
+        plot = figure(title= '**TEST graph** check Google Sheet for issues' ,
+            x_axis_label= 'Year',
+            y_axis_label= 'Performance (%)',
             plot_width =400,
             plot_height =400)
 
@@ -74,10 +74,10 @@ def home(request):
     plot.circle(years, performance, color='green')
     plot.line(years, sp500, legend_label= 'S&P500', line_width = 2, color='orange')
     plot.circle(years, sp500, color='orange')
-    #Store components 
+    #Store components
     script, div = components(plot)
-    
-    context = {'ticker_amounts': ticker_amounts, 'partner_starting_amount': partner_starting_amount, 
+
+    context = {'ticker_amounts': ticker_amounts, 'partner_starting_amount': partner_starting_amount,
     'script': script, 'div': div
         }
     return render(request, 'blog/home.html', context)
@@ -97,9 +97,9 @@ def new_home(request):
     years = [dict['year'] for dict in list(year)]
     performance = [dict['performance'] for dict in list(performance)]
     sp500 = [dict['sp500'] for dict in list(sp500)]
-    plot = figure(title= 'Partnership vs S&P500' , 
-            x_axis_label= 'Year', 
-            y_axis_label= 'Performance (%)', 
+    plot = figure(title= 'Partnership vs S&P500' ,
+            x_axis_label= 'Year',
+            y_axis_label= 'Performance (%)',
             plot_width =400,
             plot_height =400)
     plot.line(years, performance, legend_label= 'partnership', line_width = 2, color='green')
@@ -107,6 +107,6 @@ def new_home(request):
     plot.line(years, sp500, legend_label= 'S&P500', line_width = 2, color='orange')
     plot.circle(years, sp500, color='orange')
     script, div = components(plot)
-
-    context = {'title': 'Home', 'user_data': user_data, 'script': script, 'div': div} #pylint: disable=no-member
+    transactions = TransactionHistory.objects.filter(sheets_id=user_id).first()
+    context = {'title': 'Home', 'user_data': user_data, 'script': script, 'div': div, 'transaction': transactions} #pylint: disable=no-member
     return render(request, 'blog/test.html', context )

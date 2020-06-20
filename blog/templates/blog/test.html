@@ -9,6 +9,7 @@
     <p class="text-secondary">Welcome, {{ user.username }}</p>
     <p class="text-secondary">Current Equity: ${{ user_data.current_equity | intcomma}}</p>
     <p class="text-secondary">Net Equity Deposit: ${{ user_data.net_equity_deposit| intcomma }}</p>
+    <p class="text-secondary">TransactionHistory: ${{transaction.transaction_amount}} on {{transaction.date}}</p>
     <p class="text-secondary">Estimated Annual Income: ${{ user_data.estimated_annual_income | intcomma}}</p>
     {% if user_data.daily_gain >= 0 %}
       <p class="text-secondary">Today's change: <font color = 'green'> +${{ user_data.daily_gain | floatformat:2 | intcomma}} </font></p>
@@ -33,7 +34,7 @@
       <img src="data:image/png;base64,{{ data }}" alt="" height="300" ,width="300">
     </body>
 
-  
+
 
 </div>
 
