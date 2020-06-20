@@ -16,7 +16,7 @@ from .google_spreadsheet import spreadsheet
 
 #OLD HOME FUNCTION
 @login_required
-def home(request):
+def old_home(request):
     '''scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     BASE = os.path.dirname(os.path.abspath(__file__))
     data = json.loads(open(os.path.join(BASE, "client_secret.json")).read())
@@ -80,14 +80,14 @@ def home(request):
     context = {'ticker_amounts': ticker_amounts, 'partner_starting_amount': partner_starting_amount,
     'script': script, 'div': div
         }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/old_home.html', context)
 
 def about(request):
     context = {'title': 'About'}
     return render(request, 'blog/about.html', context )
 
 @login_required
-def new_home(request):
+def home(request):
     user = request.user
     user_id = user.profile.sheets_id
     user_data = UserData.objects.get(sheets_id=user_id) #pylint: disable=no-member
@@ -107,6 +107,14 @@ def new_home(request):
     plot.line(years, sp500, legend_label= 'S&P500', line_width = 2, color='orange')
     plot.circle(years, sp500, color='orange')
     script, div = components(plot)
-    transactions = TransactionHistory.objects.filter(sheets_id=user_id).first()
-    context = {'title': 'Home', 'user_data': user_data, 'script': script, 'div': div, 'transaction': transactions} #pylint: disable=no-member
-    return render(request, 'blog/test.html', context )
+    context = {'title': 'Home', 'user_data': user_data, 'script': script, 'div': div} #pylint: disable=no-member
+    return render(request, 'blog/home.html', context )
+
+
+@login_required
+def transactions(request):
+    user = request.user
+    user_id = user.profile.sheets_id
+    transactions = TransactionHistory.objects.filter(sheets_id=user_id).order_by('-date')
+    context = {'transactions': transactions} #pylint: disable=no-member
+    return render(request, 'blog/transactions.html', context )

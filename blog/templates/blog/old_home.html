@@ -1,22 +1,13 @@
 {% extends "blog/base.html" %}
 {% load custom_tags}
-{% load humanize %}
 {% block content %}
 
-
-
 <div class="content-section">
-    <p class="text-secondary">Welcome, {{ user.username }}</p>
-    <p class="text-secondary">Current Equity: ${{ user_data.current_equity | intcomma}}</p>
-    <p class="text-secondary">Net Equity Deposit: ${{ user_data.net_equity_deposit| intcomma }}</p>
-    <p class="text-secondary">Estimated Annual Income: ${{ user_data.estimated_annual_income | intcomma}}</p>
-    {% if user_data.daily_gain >= 0 %}
-      <p class="text-secondary">Today's change: <font color = 'green'> +${{ user_data.daily_gain | floatformat:2 | intcomma}} </font></p>
-    {% else %}
-      <p class="text-secondary">Today's change: <font color = 'red'> -${{ user_data.daily_gain |multiply:-1 |floatformat:2|intcomma }} </font></p>
-    {% endif %}
 
+    <p class="text-secondary">Current Equity: {{ ticker_amounts|get_item:user.profile.sheets_id }}</p>
 
+    <p class="text-secondary">Net Equity Deposit: {{ partner_starting_amount|get_item:user.profile.sheets_id }}</p>
+    
 
     <link href="https://cdn.pydata.org/bokeh/release/bokeh-1.4.0.min.css" rel=”stylesheet” type=”text/css”>
     <link href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.4.0.min.css" rel=”stylesheet” type=”text/css”>
@@ -33,8 +24,7 @@
       <img src="data:image/png;base64,{{ data }}" alt="" height="300" ,width="300">
     </body>
 
-
-
 </div>
 
 {% endblock content %}
+

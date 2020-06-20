@@ -28,6 +28,8 @@ class Command(BaseCommand):
             else:
                 transaction_unit_price = float(unit_prices[i].replace(",", ""))
             transaction_amount = amounts[i]
+            if transaction_amount.__eq__(""):
+                transaction_amount = "0"
             transaction_user = users[i]
             transaction_date = datetime.datetime.strptime(unformatted_date, "%b %d, %Y").date()
             transaction_amount = transaction_amount.strip().replace(",", "")
@@ -36,9 +38,6 @@ class Command(BaseCommand):
                 transaction_amount = transaction_amount.strip()
                 transaction_amount = float(transaction_amount)
                 transaction_amount *= -1
-            if transaction_amount.__eq__(""):
-                transaction_amount = 0
-
             transaction_amount = float(transaction_amount)
             new_transaction = TransactionHistory(sheets_id = transaction_user,
                 transaction_amount = transaction_amount,
