@@ -96,7 +96,7 @@ class Command(BaseCommand):
 
                 new_holding.save();
             except Exception as e:
-                error_msg = f'{e} occured with ticker {new_holding.ticker}'
+                error_msg = f'{e} occured with ticker {ticker}'
                 print("**************************************########################********************")
                 print(error_msg)
                 print("**************************************########################*********************")

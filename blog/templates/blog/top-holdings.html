@@ -1,0 +1,17 @@
+{% extends "blog/base.html" %}
+{% load custom_tags}
+{% load humanize %}
+{% block content %}
+
+
+
+<div class="content-section">
+  {% for holding in top_holdings %}
+  <p class="text-secondary">{{holding.ticker}} with position size: ${{holding.position_size}}</p>
+  {% endfor %}
+
+
+
+</div>
+
+{% endblock content %}

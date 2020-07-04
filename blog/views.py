@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import os
 from .models import UserData
-from .models import PartnershipData, TransactionHistory
+from .models import PartnershipData, TransactionHistory, Holdings
 from django.contrib.auth.decorators import login_required
 from bokeh.plotting import figure, output_file, show
 from bokeh.embed import components
@@ -121,3 +121,11 @@ def transactions(request):
     transactions = TransactionHistory.objects.filter(sheets_id=user_id).order_by('-date')
     context = {'transactions': transactions} #pylint: disable=no-member
     return render(request, 'blog/transactions.html', context )
+
+@login_required
+def top_holdings(request):
+    user = request.user
+    user_id = user.profile.sheets_id
+    top_holdings = Holdings.objects.all().order_by('-position_size').exclude(category="Preferred")
+    context = {'top_holdings': top_holdings} #pylint: disable=no-member
+    return render(request, 'blog/top-holdings.html', context )
