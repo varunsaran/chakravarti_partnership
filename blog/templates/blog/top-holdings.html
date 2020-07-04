@@ -7,7 +7,7 @@
 
 <div class="content-section">
   {% for holding in top_holdings %}
-  <p class="text-secondary">{{holding.ticker}} with position size: ${{holding.position_size}}</p>
+  <p class="text-secondary">{{holding.ticker}} with position size: ${{holding.position_size|intcomma}}</p>
   {% endfor %}
 
 
