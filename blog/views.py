@@ -14,6 +14,9 @@ import json
 from .google_spreadsheet import spreadsheet
 # Create your views here.
 
+# functions that render html webpages. When going to a url, the function mapped in urlpatterns.py is called,
+# and accordingly renders an html webpage.
+
 #OLD HOME FUNCTION
 @login_required
 def old_home(request):
