@@ -6,13 +6,36 @@
 
 
 <div class="content-section">
-  {% for transaction in transactions %}
+
+  <table>
+    <tr>
+        <th>Date</th>
+        <th>Amount</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+      <td>{{ transaction.date |date:"b d, Y"}}</td>
+      <td>
+          {% if transaction.transaction_amount >= 0 %}
+            <font color = 'green'> +${{ transaction.transaction_amount|intcomma }}
+          {% else %}
+            <font color = 'red'> -${{transaction.transaction_amount|multiply:-1|intcomma}} </font>
+          {% endif %}
+        </td>
+            {% endfor %}
+    </tr>
+  </table>
+
+
+
+  <!-- {% for transaction in transactions %}
       {% if transaction.transaction_amount >= 0 %}
           <p class="text-secondary"><font color = 'green'> +${{transaction.transaction_amount|intcomma}} </font> on {{transaction.date|date:"b d, Y"}} </p>
-      {% else %}
+
           <p class="text-secondary"><font color = 'red'> -${{transaction.transaction_amount|multiply:-1|intcomma}} </font> on {{transaction.date|date:"b d, Y"}} </p>
       {% endif %}
   {% endfor %}
+  -->
 
 
 

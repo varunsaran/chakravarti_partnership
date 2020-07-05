@@ -6,9 +6,42 @@
 
 
 <div class="content-section">
-  {% for holding in top_holdings %}
-  <p class="text-secondary">{{holding.ticker}} with position size: ${{holding.position_size|intcomma}}</p>
-  {% endfor %}
+  <table>
+    <tr>
+        <th>Ticker</th>
+        <th>Position Size</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Todays Gain</th>
+        <th>Overall % Gain</th>
+    </tr>
+    {% for item in top_holdings %}
+    <tr>
+        <td>{{ item.ticker }}</td>
+        <td>${{ item.position_size|intcomma }}</td>
+        <td>{{ item.quantity|intcomma }}</td>
+        <td>${{ item.price|intcomma }}</td>
+        <td>
+        {% if item.todays_gain >= 0 %}
+          <font color = 'green'> +${{ item.todays_gain | floatformat:2 | intcomma}} </font>
+        {% else %}
+          <font color = 'red'> -${{ item.todays_gain |multiply:-1 |floatformat:2|intcomma }} </font>
+          {% endif %}
+        </td>
+
+        <td>
+          {% if item.overall_pct_gain >= 0 %}
+            <font color = 'green'> +{{ item.overall_pct_gain |multiply:100| floatformat:2 | intcomma}}% </font>
+          {% else %}
+            <font color = 'red'> -{{ item.overall_pct_gain |multiply:100|multiply:-1 |floatformat:2|intcomma }}% </font>
+            {% endif %}
+            </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
 
 
 
